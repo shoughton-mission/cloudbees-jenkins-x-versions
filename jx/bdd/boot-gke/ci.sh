@@ -47,7 +47,7 @@ echo "Reqs file"
 cat jx-requirements.yml
 
 echo "Params file"
-cat parameters.yaml
+cat env/parameters.yaml
 
 
 jx step bdd \
