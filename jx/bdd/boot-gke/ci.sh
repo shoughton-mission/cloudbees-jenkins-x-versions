@@ -42,6 +42,8 @@ cp jx/bdd/boot-gke/jx-requirements.yml boot-source
 cp jx/bdd/boot-gke/parameters.yaml boot-source/env
 cd boot-source
 
+helm init --client-only
+helm repo add jenkins-x https://storage.googleapis.com/chartmuseum.jenkins-x.io
 
 echo "Reqs file"
 cat jx-requirements.yml
