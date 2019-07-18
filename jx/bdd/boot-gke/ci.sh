@@ -45,13 +45,6 @@ cd boot-source
 helm init --client-only
 helm repo add jenkins-x https://storage.googleapis.com/chartmuseum.jenkins-x.io
 
-echo "Reqs file"
-cat jx-requirements.yml
-
-echo "Params file"
-cat env/parameters.yaml
-
-
 jx step bdd \
     --use-revision \
     --version-repo-pr \
@@ -65,4 +58,9 @@ jx step bdd \
     --no-delete-app \
     --no-delete-repo \
     --tests install \
+    --tests test-create-spring \
+    --tests test-quickstart-golang-http \
+    --tests test-quickstart-node-http \
     --tests test-import
+
+    
