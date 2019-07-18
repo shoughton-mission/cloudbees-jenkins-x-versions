@@ -58,11 +58,8 @@ jx step bdd \
     --no-delete-app \
     --no-delete-repo \
     --tests install \
-    --tests test-create-spring \
-    --tests test-quickstart-golang-http \
-    --tests test-quickstart-node-http \
+    --tests test-import-spring-boot-http-gradle \
     --tests test-quickstart-spring-boot-http-gradle \
-    --tests test-import \
     --tests html-report
 
     
