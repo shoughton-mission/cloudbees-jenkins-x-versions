@@ -37,7 +37,7 @@ export JX_VALUE_PROW_HMACTOKEN="$GH_CREDS_PSW"
 # TODO temporary hack until the batch mode in jx is fixed...
 export JX_BATCH_MODE="true"
 
-git clone https://github.com/dgozalo/cloudbees-jenkins-x-boot-config boot-source
+git clone https://github.com/cloudbees/cloudbees-jenkins-x-boot-config boot-source
 cp jx/bdd/boot-gke/jx-requirements.yml boot-source
 cp jx/bdd/boot-gke/parameters.yaml boot-source/env
 cd boot-source
@@ -61,6 +61,8 @@ jx step bdd \
     --tests test-create-spring \
     --tests test-quickstart-golang-http \
     --tests test-quickstart-node-http \
-    --tests test-import
+    --tests test-quickstart-spring-boot-http-gradle \
+    --tests test-import \
+    --tests html-report
 
     
