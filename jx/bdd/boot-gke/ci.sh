@@ -58,8 +58,15 @@ jx step bdd \
     --no-delete-app \
     --no-delete-repo \
     --tests install \
-    --tests test-import-spring-boot-http-gradle \
+    --tests test-create-spring \
     --tests test-quickstart-spring-boot-http-gradle \
+    --tests test-quickstart-golang-http \
+    --tests test-quickstart-node-http \
+    --tests test-import \
+    --tests bootstrap-report \
     --tests html-report
 
-    
+jx step stash \
+  -c gke-boot-e2e-tests \
+  -p build/reports/junit.html \
+  --bucket-url gs://daniel-dev-cluster0014-lts-3ab229c3-1b50-4cdf-b90e-e143715f1
