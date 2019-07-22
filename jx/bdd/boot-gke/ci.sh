@@ -45,11 +45,14 @@ cd boot-source
 helm init --client-only
 helm repo add jenkins-x https://storage.googleapis.com/chartmuseum.jenkins-x.io
 
+ls /workspace
+
+ls /workspace/source/
+
 jx step bdd \
     --use-revision \
     --version-repo-pr \
     --versions-repo https://github.com/cloudbees/cloudbees-jenkins-x-versions.git \
-    --config ../jx/bdd/boot-gke/cluster.yaml \
     --gopath /tmp --git-provider=github \
     --git-username $GH_USERNAME \
     --git-owner $GH_OWNER \
@@ -60,3 +63,7 @@ jx step bdd \
     --no-delete-repo \
     --tests install \
     --tests test-create-spring
+
+ ls /workspace/source/reports7
+
+ ls /reports/
