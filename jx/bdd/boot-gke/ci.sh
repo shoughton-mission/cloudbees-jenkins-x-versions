@@ -28,16 +28,29 @@ git config --global --add user.email jenkins-x@googlegroups.com
 
 echo "running the BDD tests with JX_HOME = $JX_HOME"
 
-# test configuration
-export SKIP_JENKINS_CHECK="yes"
+# setup jx boot parameters
+export JX_VALUE_ADMINUSER_PASSWORD="$JENKINS_CREDS_PSW"
+export JX_VALUE_PIPELINEUSER_GITHUB_USERNAME="$GH_USERNAME"
+export JX_VALUE_PIPELINEUSER_GITHUB_TOKEN="$GH_CREDS_PSW"
+export JX_VALUE_PROW_HMACTOKEN="$GH_CREDS_PSW"
+
+# TODO temporary hack until the batch mode in jx is fixed...
+export JX_BATCH_MODE="true"
+
+git clone https://github.com/cloudbees/cloudbees-jenkins-x-boot-config boot-source
+cp jx/bdd/boot-gke/jx-requirements.yml boot-source
+cp jx/bdd/boot-gke/parameters.yaml boot-source/env
+cd boot-source
+
+helm init --client-only
+helm repo add jenkins-x https://storage.googleapis.com/chartmuseum.jenkins-x.io
 
 jx step bdd \
     --use-revision \
     --version-repo-pr \
-    --versions-repo https://github.com/jenkins-x/jenkins-x-versions.git \
-    --config jx/bdd/terraform/cluster.yaml \
-    --gopath /tmp \
-    --git-provider=github \
+    --versions-repo https://github.com/cloudbees/cloudbees-jenkins-x-versions.git \
+    --config ../jx/bdd/boot-gke/cluster.yaml \
+    --gopath /tmp --git-provider=github \
     --git-username $GH_USERNAME \
     --git-owner $GH_OWNER \
     --git-api-token $GH_CREDS_PSW \
@@ -45,10 +58,12 @@ jx step bdd \
     --no-delete-app \
     --no-delete-repo \
     --tests install \
-    --tests test-verify-pods \
-    --tests test-upgrade-platform \
-    --tests test-upgrade-ingress \
-    --tests test-app-lifecycle \
     --tests test-create-spring \
     --tests test-quickstart-golang-http \
+    --tests test-quickstart-node-http \
     --tests test-import
+
+jx step stash \
+  -c gke-boot-e2e-tests \
+  -p build/reports/junit.xml \
+  --bucket-url gs://daniel-dev-cluster0014-lts-3ab229c3-1b50-4cdf-b90e-e143715f1
