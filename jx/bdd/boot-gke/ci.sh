@@ -65,6 +65,10 @@ jx step bdd \
     --tests install \
     --tests test-create-spring
 
- ls /workspace/source/reports7
+ls /workspace/source/
 
- ls /reports/
+ls /workspace/source/reports/
+
+ls reports/
+
+ 
