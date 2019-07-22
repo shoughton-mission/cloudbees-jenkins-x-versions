@@ -55,7 +55,7 @@ jx step bdd \
     --git-owner $GH_OWNER \
     --git-api-token $GH_CREDS_PSW \
     --default-admin-password $JENKINS_CREDS_PSW \
-    --reports-dir /workspace/source/reports
+    --reports-dir /workspace/source/reports \
     --no-delete-app \
     --no-delete-repo \
     --tests install \
