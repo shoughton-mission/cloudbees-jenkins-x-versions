@@ -45,25 +45,4 @@ cd boot-source
 helm init --client-only
 helm repo add jenkins-x https://storage.googleapis.com/chartmuseum.jenkins-x.io
 
-jx step bdd \
-    --use-revision \
-    --version-repo-pr \
-    --versions-repo https://github.com/cloudbees/cloudbees-jenkins-x-versions.git \
-    --config ../jx/bdd/boot-gke/cluster.yaml \
-    --gopath /tmp --git-provider=github \
-    --git-username $GH_USERNAME \
-    --git-owner $GH_OWNER \
-    --git-api-token $GH_CREDS_PSW \
-    --default-admin-password $JENKINS_CREDS_PSW \
-    --no-delete-app \
-    --no-delete-repo \
-    --tests install \
-    --tests test-create-spring \
-    --tests test-quickstart-golang-http \
-    --tests test-quickstart-node-http \
-    --tests test-import
-
-jx step stash \
-  -c gke-boot-e2e-tests \
-  -p build/reports/junit.xml \
-  --bucket-url gs://daniel-dev-cluster0014-lts-3ab229c3-1b50-4cdf-b90e-e143715f1
+echo "PLACEHOLDER"

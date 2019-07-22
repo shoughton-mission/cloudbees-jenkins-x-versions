@@ -10,3 +10,8 @@ pipelineConfig:
             steps:
               - command: jx/bdd/gitops/ci.sh
                 name: runci
+
+              - name: generate-report
+                image: gcr.io/jenkinsxio/builder-nodejs10x:0.1.590
+                command: jx/bdd/boot-gke/gen.sh
+                
