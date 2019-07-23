@@ -12,6 +12,29 @@ pipelineConfig:
                 name: runci
 
               - name: generate-report
-                image: gcr.io/jenkinsxio/builder-nodejs10x:0.1.590
-                command: jx/bdd/boot-gke/gen.sh
+                image: dgozalo/jx-test-images:go-nodejs10x-01
+                command: jx
+                args:
+                  - step
+                  - report
+                  - --in-folder
+                  - /workspace/source/reports
+                  - --merge
+                  - --out-folder
+                  - /workspace/source/reports
+                  - --output-name
+                  - bdd_boot_gke_report.html
+                  - --suite-name
+                  - "Distribution Boot GKE BDD Tests"
+            
+              - name: stash_report
+                command: jx
+                args:
+                  - step
+                  - stash
+                  - -c
+                  - tests
+                  - -p
+                  - "/workspace/source/reports/bdd_boot_gke_report.html"
+                  - --bucket-url gs://daniel-dev-cluster0014-lts-3ab229c3-1b50-4cdf-b90e-e143715f1
                 

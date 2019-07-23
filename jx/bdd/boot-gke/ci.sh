@@ -68,10 +68,7 @@ jx step bdd \
     --tests install \
     --tests test-verify-pods
 
-ls /workspace/source/
+ls /workspace/source/reports
 
-ls /workspace/source/reports/
-
-ls reports/
 
  
