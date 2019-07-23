@@ -45,12 +45,7 @@ cd boot-source
 helm init --client-only
 helm repo add jenkins-x https://storage.googleapis.com/chartmuseum.jenkins-x.io
 
-ls /workspace
-
-ls /workspace/source/
-
 mkdir /workspace/source/reports
-
 export REPORTS_DIR=/workspace/source/reports
 
 jx step bdd \
@@ -66,9 +61,9 @@ jx step bdd \
     --no-delete-app \
     --no-delete-repo \
     --tests install \
-    --tests test-verify-pods
-
-ls /workspace/source/reports
-
-
- 
+    --tests test-verify-pods \
+    --tests test-create-spring \
+    --tests test-quickstart-golang-http \
+    --tests test-quickstart-node-http \
+    --tests test-import-spring-boot-http-gradle \
+    --tests test-import

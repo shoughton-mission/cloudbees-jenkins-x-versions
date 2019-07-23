@@ -25,7 +25,7 @@ pipelineConfig:
                   - --output-name
                   - bdd_boot_gke_report.html
                   - --suite-name
-                  - "Distribution Boot GKE BDD Tests"
+                  - "Distribution_Boot_GKE_BDD_Tests"
             
               - name: stash_report
                 command: jx
