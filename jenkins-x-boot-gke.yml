@@ -25,11 +25,10 @@ pipelineConfig:
                   - --output-name
                   - bdd_boot_gke_report.html
                   - --suite-name
-                  - "Distribution_GKE_Boot_Vault_BDD_Tests"
+                  - "GKE_Boot_Vault_BDD_Tests"
             
               - name: stash_report
                 command: jx
-
                 args:
                   - step
                   - stash
