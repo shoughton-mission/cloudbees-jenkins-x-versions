@@ -4,9 +4,9 @@ pipelineConfig:
     pullRequest:
       pipeline:
         agent:
-          image: docker.io/dgozalo/jx-test-images:go-maven-03
+          image: gcr.io/jenkinsxio/builder-go-maven:0.1.601
         stages:
           - name: ci
             steps:
-              - command: jx/bdd/boot-gke/ci.sh
+              - command: jx/bdd/gitops/ci.sh
                 name: runci
