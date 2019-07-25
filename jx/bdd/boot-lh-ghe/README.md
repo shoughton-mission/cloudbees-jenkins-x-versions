@@ -1,1 +1,0 @@
-## BDD test using JX Boot with Lighthouse, long term storage and GitHub Enterprise
