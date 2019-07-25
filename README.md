@@ -19,3 +19,34 @@ Then as charts get released we can generate Pull Requests against this repositor
 ## BDD Test Pipelines
 
 You can browse all of the separate BDD tests we run on different kinds of cluster and installation in the [jx/bdd](jx/bdd) folder.
+
+## Running the BDD Tests on a PR
+
+You can test each context individually on a PR via a comment like:
+
+    /test tekton
+    
+Or to run them all
+
+    /test all
+    
+Or to run all the boot based BDD tests
+
+    /test boot
+
+## Cluster Deletion
+
+BDD clusters are marked for deletion if the tests pass or after 2 hours from the cluster creation date if the tests fail. If you would like your cluster to not be deleted you can run:
+
+```
+jx step e2e label --keep clusterName --project-id=jenkins-x-bdd2
+```
+The above command will add a label to the cluster with the value `keep-me=true`
+
+To mark the cluster for deletion again run:
+
+```
+jx step e2e label --delete clusterName --project-id=jenkins-x-bdd2
+```
+The above command will add a label to the cluster with the value `delete-me=true`
+
