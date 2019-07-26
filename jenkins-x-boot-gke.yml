@@ -8,7 +8,7 @@ pipelineConfig:
         stages:
           - name: ci
             steps:
-              - command: jx/bdd/gitops/ci.sh
+              - command: jx/bdd/boot-gke/ci.sh
                 name: runci
 
               - name: generate-report
