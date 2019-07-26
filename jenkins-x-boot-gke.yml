@@ -4,7 +4,7 @@ pipelineConfig:
     pullRequest:
       pipeline:
         agent:
-          image: gcr.io/jenkinsxio/builder-go-maven:0.1.601
+          image: gcr.io/jenkinsxio/builder-go-maven:0.0.0-SNAPSHOT-PR-603-74
         stages:
           - name: ci
             steps:
@@ -12,7 +12,7 @@ pipelineConfig:
                 name: runci
 
               - name: generate-report
-                image: gcr.io/jenkinsxio/builder-nodejs10x:0.1.601
+                image: gcr.io/jenkinsxio/builder-nodejs10x:0.0.0-SNAPSHOT-PR-603-74
                 command: jx
                 args:
                   - step
