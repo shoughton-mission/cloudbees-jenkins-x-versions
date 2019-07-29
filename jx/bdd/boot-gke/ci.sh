@@ -39,7 +39,7 @@ export JX_BATCH_MODE="true"
 
 jx profile cloudbees
 
-git clone https://github.com/dgozalo/cloudbees-jenkins-x-boot-config boot-source
+git clone https://github.com/cloudbees/cloudbees-jenkins-x-boot-config boot-source
 cp jx/bdd/boot-gke/jx-requirements.yml boot-source
 cp jx/bdd/boot-gke/parameters.yaml boot-source/env
 cd boot-source
