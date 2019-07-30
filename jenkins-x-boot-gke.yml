@@ -36,4 +36,4 @@ pipelineConfig:
                   - tests
                   - -p
                   - "/workspace/source/reports/bdd_boot_gke_report.html"
-                  - --bucket-url gs://daniel-dev-cluster0014-lts-3ab229c3-1b50-4cdf-b90e-e143715f1
+                  - --bucket-url gs://jx-prod-logs
