@@ -1,0 +1,34 @@
+cluster:
+  clusterName: ""
+  environmentGitOwner: cb-kubecd
+  project: jenkins-x-bdd2
+  provider: gke
+  zone: europe-west1-c
+gitops: true
+environments:
+- key: dev
+- key: staging
+- key: production
+ingress:
+  domain: ""
+  externalDNS: false
+  tls:
+    email: ""
+    enabled: false
+    production: false
+kaniko: true
+secretStorage: vault
+storage:
+  logs:
+    enabled: true
+    url: ""
+  reports:
+    enabled: true
+    url: ""
+  repository:
+    enabled: true
+    url: ""
+versionStream:
+  ref: master
+  url: https://github.com/cloudbees/cloudbees-jenkins-x-versions.git
+webhook: prow
