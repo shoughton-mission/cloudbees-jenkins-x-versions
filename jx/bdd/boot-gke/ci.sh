@@ -36,6 +36,9 @@ export JX_VALUE_PIPELINEUSER_GITHUB_TOKEN="$GH_CREDS_PSW"
 export JX_VALUE_PIPELINEUSER_TOKEN="$GH_CREDS_PSW"
 export JX_VALUE_PROW_HMACTOKEN="$GH_CREDS_PSW"
 
+# override checking for diffs in jx-requirements.yaml as we need to change it before booting
+export OVERRIDE_DIFF_CHECK="true"
+
 # TODO temporary hack until the batch mode in jx is fixed...
 export JX_BATCH_MODE="true"
 
