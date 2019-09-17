@@ -18,3 +18,6 @@ pipelineConfig:
                 - ${VERSION}
                 - --rev
                 - ${PULL_BASE_SHA}
+
+              - name: release-jx
+                command: ./jx/scripts/release-jx.sh
