@@ -1,7 +1,7 @@
 cluster:
   clusterName: ""
   environmentGitOwner: cb-kubecd
-  project: jenkins-x-bdd2
+  project: jenkins-x-bdd3
   provider: gke
   zone: europe-west1-c
 gitops: true
