@@ -4,7 +4,7 @@ pipelineConfig:
     pullRequest:
       pipeline:
         agent:
-          image: docker.io/dgozalo/jx-test-images:go-override-diff-1
+          image: gcr.io/jenkinsxio/builder-go-maven:0.1.759
         stages:
           - name: ci
             steps:
@@ -12,7 +12,7 @@ pipelineConfig:
                 name: runci
 
               - name: generate-report
-                image: gcr.io/jenkinsxio/builder-nodejs10x:0.1.686
+                image: gcr.io/jenkinsxio/builder-nodejs10x:0.1.759
                 command: jx
                 args:
                   - step

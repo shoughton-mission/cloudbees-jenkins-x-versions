@@ -7,8 +7,14 @@ cluster:
 gitops: true
 environments:
 - key: dev
+  owner: ""
+  repository: ""
 - key: staging
+  owner: ""
+  repository: ""
 - key: production
+  owner: ""
+  repository: ""
 ingress:
   domain: ""
   externalDNS: false
