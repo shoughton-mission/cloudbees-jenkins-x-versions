@@ -68,4 +68,6 @@ jx step bdd \
     --no-delete-app \
     --no-delete-repo \
     --tests install \
-    --tests test-import
+    --tests test-verify-pods \
+    --tests test-create-spring \
+    --tests test-supported-quickstarts 
