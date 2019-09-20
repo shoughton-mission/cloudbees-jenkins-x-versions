@@ -17,6 +17,7 @@ pipelineConfig:
                 args:
                   - step
                   - report
+                  - junit
                   - --in-dir
                   - /workspace/source/reports
                   - --merge
