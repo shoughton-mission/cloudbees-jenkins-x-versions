@@ -4,8 +4,6 @@ pipelineConfig:
     pullRequest:
       pipeline:
         environment:
-          - name: GOPROXY
-            value: http://jenkins-x-athens-proxy:80
           - name: GKE_SA
             value: /secrets/bdd/sa.json
           - name: GH_ACCESS_TOKEN 
