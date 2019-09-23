@@ -45,6 +45,11 @@ cp jx/bdd/boot-gke/jx-requirements.yml boot-source
 cp jx/bdd/boot-gke/parameters.yaml boot-source/env
 cd boot-source
 
+# use the current git SHA being built in the version stream
+if [[ -n "${PULL_BASE_SHA}" ]]; then
+    sed -i "/^ *versionStream:/,/^ *[^:]*:/s/ref: .*/ref: $PULL_BASE_SHA/" jx-requirements.yml
+fi
+
 helm init --client-only
 helm repo add jenkins-x https://storage.googleapis.com/chartmuseum.jenkins-x.io
 
