@@ -46,7 +46,10 @@ cp jx/bdd/boot-gke/parameters.yaml boot-source/env
 cd boot-source
 
 # use the current git SHA being built in the version stream
-sed -i "/^ *versionStream:/,/^ *[^:]*:/s/ref: .*/ref: ${PULL_BASE_SHA}/" jx-requirements.yml
+if [[ -n "${PULL_PULL_SHA}" ]]; then
+  sed -i "/^ *versionStream:/,/^ *[^:]*:/s/ref: .*/ref: ${PULL_PULL_SHA}/" jx-requirements.yml
+fi
+
 echo "Using jx-requirements.yml"
 cat jx-requirements.yml
 
@@ -60,7 +63,8 @@ jx step bdd \
     --use-revision \
     --version-repo-pr \
     --versions-repo https://github.com/cloudbees/cloudbees-jenkins-x-versions.git \
-    --gopath /tmp --git-provider=github \
+    --gopath /tmp \
+    --git-provider=github \
     --config ../jx/bdd/boot-gke/cluster.yaml \
     --git-username $GH_USERNAME \
     --git-owner $GH_OWNER \
