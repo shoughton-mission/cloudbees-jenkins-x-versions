@@ -54,13 +54,7 @@ pipelineConfig:
                   - "GKE_Boot_Vault_BDD_Tests"
             
               - name: stash_report
-                command: jx
+                command: jx/bdd/boot-gke/report.sh
                 args:
-                  - step
-                  - stash
-                  - -c
-                  - tests
-                  - -p
                   - "/workspace/source/reports/bdd_boot_gke_report.html"
-                  - --bucket-url gs://cjxd-release-logs
 
