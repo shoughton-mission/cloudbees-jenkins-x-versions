@@ -6,6 +6,8 @@ pipelineConfig:
         environment:
           - name: GKE_SA
             value: /secrets/bdd/sa.json
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /secrets/bdd/sa.json
           - name: GH_ACCESS_TOKEN 
             valueFrom:
               secretKeyRef:
