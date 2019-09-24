@@ -62,5 +62,5 @@ pipelineConfig:
                   - tests
                   - -p
                   - "/workspace/source/reports/bdd_boot_gke_report.html"
-                  - --bucket-url gs://jx-prod-logs
+                  - --bucket-url gs://cjxd-release-logs
 
