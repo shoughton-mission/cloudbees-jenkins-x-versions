@@ -3,11 +3,7 @@ set -e
 set -x
 
 export GH_USERNAME="jenkins-x-bot-test"
-export GH_OWNER="cb-kubecd"
-
-export GH_CREDS_PSW="$(jx step credential -s jenkins-x-bot-test-github)"
-export JENKINS_CREDS_PSW="$(jx step credential -s  test-jenkins-user)"
-export GKE_SA="$(jx step credential -k bdd-credentials.json -s bdd-secret -f sa.json)"
+export GH_OWNER="jenkins-x-bot-test"
 
 # fix broken `BUILD_NUMBER` env var
 export BUILD_NUMBER="$BUILD_ID"
@@ -34,14 +30,14 @@ export SKIP_JENKINS_CHECK="yes"
 jx step bdd \
     --use-revision \
     --version-repo-pr \
-    --versions-repo https://github.com/jenkins-x/jenkins-x-versions.git \
+    --versions-repo https://github.com/cloudbees/cloudbees-jenkins-x-versions.git \
     --config jx/bdd/tekton/cluster.yaml \
     --gopath /tmp \
     --git-provider=github \
     --git-username $GH_USERNAME \
     --git-owner $GH_OWNER \
-    --git-api-token $GH_CREDS_PSW \
-    --default-admin-password $JENKINS_CREDS_PSW \
+    --git-api-token $GH_ACCESS_TOKEN \
+    --default-admin-password $JENKINS_PASSWORD \
     --no-delete-app \
     --no-delete-repo \
     --tests install \
@@ -49,6 +45,5 @@ jx step bdd \
     --tests test-upgrade-platform \
     --tests test-upgrade-ingress \
     --tests test-app-lifecycle \
-    --tests test-create-spring \
     --tests test-quickstart-golang-http \
     --tests test-import

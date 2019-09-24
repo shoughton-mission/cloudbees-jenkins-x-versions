@@ -5,10 +5,6 @@ set -x
 export GH_USERNAME="jenkins-x-bot-test"
 export GH_OWNER="cb-kubecd"
 
-export GH_CREDS_PSW="$(jx step credential -s jenkins-x-bot-test-github)"
-export JENKINS_CREDS_PSW="$(jx step credential -s  test-jenkins-user)"
-export GKE_SA="$(jx step credential -k bdd-credentials.json -s bdd-secret -f sa.json)"
-
 # fix broken `BUILD_NUMBER` env var
 export BUILD_NUMBER="$BUILD_ID"
 
@@ -29,12 +25,12 @@ git config --global --add user.email jenkins-x@googlegroups.com
 echo "running the BDD tests with JX_HOME = $JX_HOME"
 
 # setup jx boot parameters
-export JX_VALUE_ADMINUSER_PASSWORD="$JENKINS_CREDS_PSW"
+export JX_VALUE_ADMINUSER_PASSWORD="$JENKINS_PASSWORD"
 export JX_VALUE_PIPELINEUSER_USERNAME="$GH_USERNAME"
 export JX_VALUE_PIPELINEUSER_GITHUB_USERNAME="$GH_USERNAME"
-export JX_VALUE_PIPELINEUSER_GITHUB_TOKEN="$GH_CREDS_PSW"
-export JX_VALUE_PIPELINEUSER_TOKEN="$GH_CREDS_PSW"
-export JX_VALUE_PROW_HMACTOKEN="$GH_CREDS_PSW"
+export JX_VALUE_PIPELINEUSER_GITHUB_TOKEN="$GH_ACCESS_TOKEN"
+export JX_VALUE_PIPELINEUSER_TOKEN="$GH_ACCESS_TOKEN"
+export JX_VALUE_PROW_HMACTOKEN="$GH_ACCESS_TOKEN"
 
 # override checking for diffs in jx-requirements.yaml as we need to change it before booting
 export OVERRIDE_DIFF_CHECK="true"
@@ -49,6 +45,14 @@ cp jx/bdd/boot-gke/jx-requirements.yml boot-source
 cp jx/bdd/boot-gke/parameters.yaml boot-source/env
 cd boot-source
 
+# use the current git SHA being built in the version stream
+if [[ -n "${PULL_PULL_SHA}" ]]; then
+  sed -i "/^ *versionStream:/,/^ *[^:]*:/s/ref: .*/ref: ${PULL_PULL_SHA}/" jx-requirements.yml
+fi
+
+echo "Using jx-requirements.yml"
+cat jx-requirements.yml
+
 helm init --client-only
 helm repo add jenkins-x https://storage.googleapis.com/chartmuseum.jenkins-x.io
 
@@ -59,12 +63,13 @@ jx step bdd \
     --use-revision \
     --version-repo-pr \
     --versions-repo https://github.com/cloudbees/cloudbees-jenkins-x-versions.git \
-    --gopath /tmp --git-provider=github \
+    --gopath /tmp \
+    --git-provider=github \
     --config ../jx/bdd/boot-gke/cluster.yaml \
     --git-username $GH_USERNAME \
     --git-owner $GH_OWNER \
-    --git-api-token $GH_CREDS_PSW \
-    --default-admin-password $JENKINS_CREDS_PSW \
+    --git-api-token $GH_ACCESS_TOKEN \
+    --default-admin-password $JENKINS_PASSWORD \
     --no-delete-app \
     --no-delete-repo \
     --tests install \
