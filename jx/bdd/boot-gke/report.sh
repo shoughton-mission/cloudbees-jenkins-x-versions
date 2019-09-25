@@ -2,16 +2,20 @@
 set -euo pipefail
 set -x
 
-if [ $# -ne 1 ]; then
-    echo "Please provide the report file"
+if [ $# -ne 2 ]; then
+    echo "Please provide the base dir and report file"
     exit -1
 fi
-REPORT=$1
+BASEDIR=$1
+REPORT=$2
+DATE=$(date '+%F')
 
 # activate the GCP service account before uploading the report
 gcloud auth activate-service-account --key-file $GKE_SA
 
 jx step stash \
     -c tests \
+    --basedir "${BASEDIR}" \
     -p "${REPORT}" \
     --bucket-url gs://cjxd-release-logs
+    -t "reports/${DATE}"
