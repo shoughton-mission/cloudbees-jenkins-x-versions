@@ -17,5 +17,5 @@ jx step stash \
     -c tests \
     --basedir "${BASEDIR}" \
     -p "${REPORT}" \
-    --bucket-url gs://cjxd-release-logs
+    --bucket-url gs://cjxd-release-logs \
     -t "reports/${DATE}"
