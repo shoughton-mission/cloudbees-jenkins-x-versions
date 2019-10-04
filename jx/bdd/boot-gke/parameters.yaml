@@ -3,7 +3,6 @@ adminUser:
 enableDocker: false
 gitProvider: github
 gpg: {}
-
 pipelineUser:
   host: github.com
   username: jenkins-x-bot-test
