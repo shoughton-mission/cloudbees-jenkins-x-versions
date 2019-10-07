@@ -43,6 +43,8 @@ export JX_VALUE_PROW_HMACTOKEN="$GH_ACCESS_TOKEN"
 # TODO temporary hack until the batch mode in jx is fixed...
 export JX_BATCH_MODE="true"
 
+jx profile cloudbees
+
 # prepare the BDD configuration
 mkdir -p $DST_PATH
 cp -r `ls -A | grep -v "${DST_PATH}"` $DST_PATH
