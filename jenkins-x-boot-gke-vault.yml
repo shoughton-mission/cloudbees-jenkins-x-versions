@@ -43,6 +43,7 @@ pipelineConfig:
             steps:
               - command: jx/bdd/boot-gke-vault/ci.sh
                 name: runci
+                args: ['jx/bdd/boot-gke-vault', 'boot-source']
 
               - name: generate-report
                 image: gcr.io/jenkinsxio/builder-nodejs10x:0.1.773
