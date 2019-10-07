@@ -1,5 +1,5 @@
 clusters:
-  - name: boot-gke-vault
+  - name: boot-vault-gke
     args:
       - create
       - cluster

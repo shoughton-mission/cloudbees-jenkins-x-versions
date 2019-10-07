@@ -22,7 +22,7 @@ environments:
         enabled: false
 gitops: true
 ingress:
-  domain: boot.bdd.jenkins-x.rocks
+  domain: cjxd1.bdd.jenkins-x.rocks
   externalDNS: true
   namespaceSubDomain: -jx.
   tls:

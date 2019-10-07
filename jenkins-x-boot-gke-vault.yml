@@ -63,7 +63,7 @@ pipelineConfig:
                   - "GKE_Boot_Vault_BDD_Tests"
             
               - name: stash_report
-                command: jx/bdd/boot-gke/report.sh
+                command: jx/bdd/boot-gke-vault/report.sh
                 args:
                   - "/workspace/source/reports"
                   - "/workspace/source/reports/bdd_boot_gke_vault_report.html"
