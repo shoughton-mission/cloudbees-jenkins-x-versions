@@ -2,13 +2,6 @@
 set -euo pipefail
 set -x
 
-if [ $# -ne 2 ]; then
-    echo "Please provide the source and destination paths for configuration"
-    exit -1
-fi
-SRC_PATH=$1
-DST_PATH=$2
-
 export GH_USERNAME="jenkins-x-bot-test"
 export GH_OWNER="cb-kubecd"
 export GH_EMAIL="jenkins-x@googlegroups.com"
@@ -46,11 +39,10 @@ export JX_BATCH_MODE="true"
 jx profile cloudbees
 
 # prepare the BDD configuration
-mkdir -p $DST_PATH
-cp -r `ls -A | grep -v "${DST_PATH}"` $DST_PATH
-cp $SRC_PATH/jx-requirements.yml $DST_PATH
-cp $SRC_PATH/parameters.yaml $DST_PATH/env
-cd $DST_PATH
+git clone https://github.com/cloudbees/cloudbees-jenkins-x-boot-config boot-source
+cp jx/bdd/boot-gke-vault/jx-requirements.yml boot-source
+cp jx/bdd/boot-gke-vault/parameters.yaml boot-source/env
+cd boot-source
 
 # Rotate the domain to avoid cert-manager API rate limit
 if [[ "${DOMAIN_ROTATION}" == "true" ]]; then
@@ -74,7 +66,7 @@ jx step bdd \
     --use-revision \
     --version-repo-pr \
     --versions-repo https://github.com/cloudbees/cloudbees-jenkins-x-versions.git \
-    --config $SRC_PATH/cluster.yaml \
+    --config ../jx/bdd/boot-gke-vault/cluster.yaml \
     --gopath /tmp \
     --git-provider=github \
     --git-username $GH_USERNAME \
