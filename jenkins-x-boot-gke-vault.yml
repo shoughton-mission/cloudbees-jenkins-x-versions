@@ -25,7 +25,7 @@ pipelineConfig:
                 name: test-jenkins-user 
                 key: password
         agent:
-          image: gcr.io/jenkinsxio/builder-go-maven:0.1.773
+          image: gcr.io/jenkinsxio/builder-go-maven:0.1.760
         stages:
           - name: ci
             options:
@@ -46,7 +46,7 @@ pipelineConfig:
                 args: ['jx/bdd/boot-gke-vault', 'boot-source']
 
               - name: generate-report
-                image: gcr.io/jenkinsxio/builder-nodejs10x:0.1.773
+                image: gcr.io/jenkinsxio/builder-nodejs10x:0.1.760
                 command: jx
                 args:
                   - step
