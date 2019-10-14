@@ -1,7 +1,6 @@
 approvers:
 - rawlingsj
 - jstrachan
-- rajdavies
 - ccojocar
 - garethjevans
 - pmuir
@@ -13,7 +12,6 @@ approvers:
 reviewers:
 - rawlingsj
 - jstrachan
-- rajdavies
 - ccojocar
 - garethjevans
 - pmuir
@@ -21,4 +19,3 @@ reviewers:
 - warrenbailey
 - cagiti
 - abayer
-- macox
