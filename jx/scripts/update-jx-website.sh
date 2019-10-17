@@ -20,8 +20,8 @@ then
         git add *
         git commit --allow-empty -a -m "updated jx commands & API docs from $JX_VERSION"
         
-        # this seems to cause rebase errors due to removed old site dir
-        #git fetch origin && git rebase origin/master
+        # Note that when doing a rebase theirs and ours are swapped so -X theirs actually automatically accepts our changes in case of conflict
+        git fetch origin && git rebase -X theirs origin/master
       popd
 
       echo "Updating the JSON Schema"
@@ -33,8 +33,8 @@ then
         git add *
         git commit --allow-empty -a -m "updated jx Json Schema from $JX_VERSION"
         
-        # this seems to cause rebase errors due to removed old site dir
-        #git fetch origin && git rebase origin/master
+        # Note that when doing a rebase theirs and ours are swapped so -X theirs actually automatically accepts our changes in case of conflict
+        git fetch origin && git rebase -X theirs origin/master
       popd
 
       echo "Updating the JX CLI & API reference docs"
@@ -43,16 +43,17 @@ then
       pushd jx
         git fetch --tags
         git checkout v${JX_VERSION}
-        make generate-docs
+        make generate-refdocs
       popd
-      cp -r jx/docs/apidocs/site/* jx-docs/static/apidocs
+      cp jx/docs/apidocs.md jx-docs/content/en/docs/reference/api.md
+      cp jx/docs/config.md jx-docs/content/en/docs/reference/config
 
-      pushd jx-docs/static/apidocs
+      pushd jx-docs/content/en/docs/reference
         git add *
         git commit --allow-empty -a -m "updated jx API docs from $JX_VERSION"
 
-        # this seems to cause rebase errors due to removed old site dir
-        #git fetch origin && git rebase origin/master
+        # Note that when doing a rebase theirs and ours are swapped so -X theirs actually automatically accepts our changes in case of conflict
+        git fetch origin && git rebase -X theirs origin/master
       popd
 
       pushd jx-docs
