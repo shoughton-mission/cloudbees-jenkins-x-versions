@@ -1,6 +1,8 @@
 cluster:
   clusterName: ""
   environmentGitOwner: cb-kubecd
+  environmentGitPublic: true
+  gitPublic: true
   project: jenkins-x-bdd3
   provider: gke
   zone: europe-west1-c
@@ -44,5 +46,7 @@ storage:
 versionStream:
   ref: 0bd5029b55249cbe5892ecf1cafae2014a66e168
   url: https://github.com/cloudbees/cloudbees-jenkins-x-versions.git
+vault:
+  disableURLDiscovery: true
 webhook: prow
 
