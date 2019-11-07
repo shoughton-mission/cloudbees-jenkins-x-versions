@@ -38,6 +38,10 @@ export OVERRIDE_DIFF_CHECK="true"
 # TODO temporary hack until the batch mode in jx is fixed...
 export JX_BATCH_MODE="true"
 
+wget https://storage.googleapis.com/artifacts.jenkinsxio.appspot.com/binaries/cjxd/prerelease/0.0.0-SNAPSHOT-PR-1-8/artifacts.tgz
+tar -xvf artifacts.tgz
+export PATH=$(pwd)/linux:$PATH
+
 jx profile cloudbees
 
 # use the current git SHA being built in the version stream
