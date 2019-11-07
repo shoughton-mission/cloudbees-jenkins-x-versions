@@ -42,11 +42,11 @@ jx profile cloudbees
 
 # use the current git SHA being built in the version stream
 if [[ -n "${PULL_PULL_SHA}" ]]; then
-  sed -i "/^ *versionStream:/,/^ *[^:]*:/s/ref: .*/ref: ${PULL_PULL_SHA}/" jx-requirements.yml
+  sed -i "/^ *versionStream:/,/^ *[^:]*:/s/ref: .*/ref: ${PULL_PULL_SHA}/" jx/bdd/boot-gke/jx-requirements.yml
 fi
 
-echo "Using jx-requirements.yml"
-cat jx-requirements.yml
+echo "Using jx/bdd/boot-gke/jx-requirements.yml"
+cat jx/bdd/boot-gke/jx-requirements.yml
 
 helm init --client-only
 helm repo add jenkins-x https://storage.googleapis.com/chartmuseum.jenkins-x.io
@@ -60,7 +60,7 @@ jx step bdd \
     --versions-repo https://github.com/cloudbees/cloudbees-jenkins-x-versions.git \
     --gopath /tmp \
     --git-provider=github \
-    --config ../jx/bdd/boot-gke/cluster.yaml \
+    --config jx/bdd/boot-gke/cluster.yaml \
     --git-username $GH_USERNAME \
     --git-owner $GH_OWNER \
     --git-api-token $GH_ACCESS_TOKEN \
