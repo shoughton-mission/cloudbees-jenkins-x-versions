@@ -61,6 +61,8 @@ export REPORTS_DIR=/workspace/source/reports
 mkdir boot-source
 cd boot-source
 
+cp ../jx/bdd/boot-gke/jx-requirements.yml .
+
 jx step bdd \
     --use-revision \
     --version-repo-pr \
