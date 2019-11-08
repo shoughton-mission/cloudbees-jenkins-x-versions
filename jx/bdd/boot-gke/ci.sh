@@ -67,7 +67,7 @@ jx step bdd \
     --versions-repo https://github.com/cloudbees/cloudbees-jenkins-x-versions.git \
     --gopath /tmp \
     --git-provider=github \
-    --config jx/bdd/boot-gke/cluster.yaml \
+    --config ../jx/bdd/boot-gke/cluster.yaml \
     --git-username $GH_USERNAME \
     --git-owner $GH_OWNER \
     --git-api-token $GH_ACCESS_TOKEN \
