@@ -58,6 +58,9 @@ helm repo add jenkins-x https://storage.googleapis.com/chartmuseum.jenkins-x.io
 mkdir /workspace/source/reports
 export REPORTS_DIR=/workspace/source/reports
 
+mkdir boot-source
+cd boot-source
+
 jx step bdd \
     --use-revision \
     --version-repo-pr \
