@@ -4,6 +4,7 @@ set -x
 
 export GH_USERNAME="jenkins-x-bot-test"
 export GH_OWNER="cb-kubecd"
+export GH_EMAIL="jenkins-x@googlegroups.com"
 
 # fix broken `BUILD_NUMBER` env var
 export BUILD_NUMBER="$BUILD_ID"
@@ -20,17 +21,19 @@ gcloud auth activate-service-account --key-file $GKE_SA
 
 # lets setup git 
 git config --global --add user.name JenkinsXBot
-git config --global --add user.email jenkins-x@googlegroups.com
+git config --global --add user.email $GH_EMAIL
 
 echo "running the BDD tests with JX_HOME = $JX_HOME"
 
 # setup jx boot parameters
 export JX_VALUE_ADMINUSER_PASSWORD="$JENKINS_PASSWORD"
 export JX_VALUE_PIPELINEUSER_USERNAME="$GH_USERNAME"
+export JX_VALUE_PIPELINEUSER_EMAIL="$GH_EMAIL"
 export JX_VALUE_PIPELINEUSER_GITHUB_USERNAME="$GH_USERNAME"
 export JX_VALUE_PIPELINEUSER_GITHUB_TOKEN="$GH_ACCESS_TOKEN"
 export JX_VALUE_PIPELINEUSER_TOKEN="$GH_ACCESS_TOKEN"
 export JX_VALUE_PROW_HMACTOKEN="$GH_ACCESS_TOKEN"
+
 
 # override checking for diffs in jx-requirements.yaml as we need to change it before booting
 export OVERRIDE_DIFF_CHECK="true"
