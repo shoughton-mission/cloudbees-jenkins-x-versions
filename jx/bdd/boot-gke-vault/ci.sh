@@ -58,7 +58,7 @@ cat jx/bdd/boot-gke-vault/jx-requirements.yml
 mkdir boot-source
 cd boot-source
 
-cp ../jx/bdd/boot-gke/jx-requirements.yml .
+cp ../jx/bdd/boot-gke-vault/jx-requirements.yml .
 
 # TODO hack until we fix boot to do this too!
 helm init --client-only
