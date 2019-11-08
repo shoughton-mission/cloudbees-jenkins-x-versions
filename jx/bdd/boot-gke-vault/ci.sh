@@ -36,13 +36,9 @@ export JX_VALUE_PROW_HMACTOKEN="$GH_ACCESS_TOKEN"
 # TODO temporary hack until the batch mode in jx is fixed...
 export JX_BATCH_MODE="true"
 
-jx profile cloudbees
-
-# prepare the BDD configuration
-git clone https://github.com/cloudbees/cloudbees-jenkins-x-boot-config boot-source
-cp jx/bdd/boot-gke-vault/jx-requirements.yml boot-source
-cp jx/bdd/boot-gke-vault/parameters.yaml boot-source/env
-cd boot-source
+wget https://storage.googleapis.com/artifacts.jenkinsxio.appspot.com/binaries/cjxd/prerelease/0.0.0-SNAPSHOT-PR-1-9/artifacts.tgz
+tar -xvf artifacts.tgz
+export PATH=$(pwd)/linux:$PATH
 
 # Rotate the domain to avoid cert-manager API rate limit
 if [[ "${DOMAIN_ROTATION}" == "true" ]]; then
@@ -53,10 +49,16 @@ if [[ "${DOMAIN_ROTATION}" == "true" ]]; then
         exit -1
     fi
     echo "Using domain: ${DOMAIN}"
-    sed -i "/^ *ingress:/,/^ *[^:]*:/s/domain: .*/domain: ${DOMAIN}/" jx-requirements.yml
+    sed -i "/^ *ingress:/,/^ *[^:]*:/s/domain: .*/domain: ${DOMAIN}/" jx/bdd/boot-gke-vault/jx-requirements.yml
 fi
-echo "Using jx-requirements.yml"
-cat jx-requirements.yml
+
+echo "Using jx/bdd/boot-gke-vault/jx-requirements.yml"
+cat jx/bdd/boot-gke-vault/jx-requirements.yml
+
+mkdir boot-source
+cd boot-source
+
+cp ../jx/bdd/boot-gke/jx-requirements.yml .
 
 # TODO hack until we fix boot to do this too!
 helm init --client-only
