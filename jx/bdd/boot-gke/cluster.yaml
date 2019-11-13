@@ -17,4 +17,4 @@ clusters:
           - boot
           - -b
           - -r
-          - jx-requirements.yml
+          - jx-requirements-gke.yml

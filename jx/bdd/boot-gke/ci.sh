@@ -26,6 +26,11 @@ git config --global --add user.email $GH_EMAIL
 echo "running the BDD tests with JX_HOME = $JX_HOME"
 
 # setup jx boot parameters
+export JX_REQUIREMENT_ENV_GIT_PUBLIC=true
+export JX_REQUIREMENT_GIT_PUBLIC=true
+export JX_REQUIREMENT_ENV_GIT_OWNER="$GH_OWNER"
+export JX_REQUIREMENT_PROJECT="jenkins-x-bdd3"
+export JX_REQUIREMENT_ZONE="europe-west1-c"
 export JX_VALUE_ADMINUSER_PASSWORD="$JENKINS_PASSWORD"
 export JX_VALUE_PIPELINEUSER_USERNAME="$GH_USERNAME"
 export JX_VALUE_PIPELINEUSER_EMAIL="$GH_EMAIL"
@@ -41,19 +46,20 @@ export OVERRIDE_DIFF_CHECK="true"
 # TODO temporary hack until the batch mode in jx is fixed...
 export JX_BATCH_MODE="true"
 
-wget https://storage.googleapis.com/artifacts.jenkinsxio.appspot.com/binaries/cjxd/prerelease/0.0.0-SNAPSHOT-PR-1-9/artifacts.tgz
-tar -xvf artifacts.tgz
-export PATH=$(pwd)/linux:$PATH
+JX_DOWNLOAD_LOCATION=$(<jx/CJXD_LOCATION_LINUX)
 
-jx profile cloudbees
+wget $JX_DOWNLOAD_LOCATION
+tar -zxvf jx-linux-amd64.tar.gz
+export PATH=$(pwd):$PATH
+
 
 # use the current git SHA being built in the version stream
 if [[ -n "${PULL_PULL_SHA}" ]]; then
-  sed -i "/^ *versionStream:/,/^ *[^:]*:/s/ref: .*/ref: ${PULL_PULL_SHA}/" jx/bdd/boot-gke/jx-requirements.yml
+  sed -i "/^ *versionStream:/,/^ *[^:]*:/s/ref: .*/ref: ${PULL_PULL_SHA}/" jx-requirements-gke.yml
 fi
 
-echo "Using jx/bdd/boot-gke/jx-requirements.yml"
-cat jx/bdd/boot-gke/jx-requirements.yml
+echo "Using jx-requirements-gke.yml"
+cat jx-requirements-gke.yml
 
 helm init --client-only
 helm repo add jenkins-x https://storage.googleapis.com/chartmuseum.jenkins-x.io
@@ -64,7 +70,7 @@ export REPORTS_DIR=/workspace/source/reports
 mkdir boot-source
 cd boot-source
 
-cp ../jx/bdd/boot-gke/jx-requirements.yml .
+cp ../jx-requirements-gke.yml .
 
 jx step bdd \
     --use-revision \
