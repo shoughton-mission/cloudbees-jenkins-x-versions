@@ -58,11 +58,12 @@ export PATH=$(pwd):$PATH
 
 # use the current git SHA being built in the version stream
 if [[ -n "${PULL_PULL_SHA}" ]]; then
-  sed -i "/^ *versionStream:/,/^ *[^:]*:/s/ref: .*/ref: ${PULL_PULL_SHA}/" jx-requirements-gke.yml
+  sed -i "/^ *versionStream:/,/^ *[^:]*:/s/ref: .*/ref: ${PULL_PULL_SHA}/" ../jx/bdd/boot-gke/jx-requirements.yml
 fi
 
-echo "Using jx-requirements-gke.yml"
-cat jx-requirements-gke.yml
+echo "Using ../jx/bdd/boot-gke/jx-requirements.yml"
+cat ../jx/bdd/boot-gke/jx-requirements.yml
+cp ../jx/bdd/boot-gke/jx-requirements.yml .
 
 helm init --client-only
 helm repo add jenkins-x https://storage.googleapis.com/chartmuseum.jenkins-x.io
