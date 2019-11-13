@@ -41,10 +41,11 @@ export JX_VALUE_PROW_HMACTOKEN="$GH_ACCESS_TOKEN"
 # TODO temporary hack until the batch mode in jx is fixed...
 export JX_BATCH_MODE="true"
 
-JX_DOWNLOAD_LOCATION=$(<jx/CJXD_LOCATION_LINUX)
 
 mkdir boot-source
 cd boot-source
+
+JX_DOWNLOAD_LOCATION=$(<../jx/CJXD_LOCATION_LINUX)
 
 wget $JX_DOWNLOAD_LOCATION
 tar -zxvf jx-linux-amd64.tar.gz

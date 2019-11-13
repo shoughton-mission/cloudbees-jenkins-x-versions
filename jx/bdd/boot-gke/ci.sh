@@ -49,7 +49,7 @@ export JX_BATCH_MODE="true"
 mkdir boot-source
 cd boot-source
 
-JX_DOWNLOAD_LOCATION=$(<jx/CJXD_LOCATION_LINUX)
+JX_DOWNLOAD_LOCATION=$(<../jx/CJXD_LOCATION_LINUX)
 
 wget $JX_DOWNLOAD_LOCATION
 tar -zxvf jx-linux-amd64.tar.gz
