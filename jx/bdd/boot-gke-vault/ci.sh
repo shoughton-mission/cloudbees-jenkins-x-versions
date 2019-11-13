@@ -43,6 +43,9 @@ export JX_BATCH_MODE="true"
 
 JX_DOWNLOAD_LOCATION=$(<jx/CJXD_LOCATION_LINUX)
 
+mkdir boot-source
+cd boot-source
+
 wget $JX_DOWNLOAD_LOCATION
 tar -zxvf jx-linux-amd64.tar.gz
 export PATH=$(pwd):$PATH
@@ -50,7 +53,7 @@ export PATH=$(pwd):$PATH
 
 # use the current git SHA being built in the version stream
 if [[ -n "${PULL_PULL_SHA}" ]]; then
-  sed -i "/^ *versionStream:/,/^ *[^:]*:/s/ref: .*/ref: ${PULL_PULL_SHA}/" jx/bdd/boot-gke-vault/jx-requirements.yml
+  sed -i "/^ *versionStream:/,/^ *[^:]*:/s/ref: .*/ref: ${PULL_PULL_SHA}/" ../jx/bdd/boot-gke-vault/jx-requirements.yml
 fi
 
 
@@ -63,14 +66,13 @@ if [[ "${DOMAIN_ROTATION}" == "true" ]]; then
         exit -1
     fi
     echo "Using domain: ${DOMAIN}"
-    sed -i "/^ *ingress:/,/^ *[^:]*:/s/domain: .*/domain: ${DOMAIN}/" jx/bdd/boot-gke-vault/jx-requirements.yml
+    sed -i "/^ *ingress:/,/^ *[^:]*:/s/domain: .*/domain: ${DOMAIN}/" ../jx/bdd/boot-gke-vault/jx-requirements.yml
 fi
 
-echo "Using jx/bdd/boot-gke-vault/jx-requirements.yml"
-cat jx/bdd/boot-gke-vault/jx-requirements.yml
+echo "Using ../jx/bdd/boot-gke-vault/jx-requirements.yml"
+cat ../jx/bdd/boot-gke-vault/jx-requirements.yml
 
-mkdir boot-source
-cd boot-source
+
 
 cp ../jx/bdd/boot-gke-vault/jx-requirements.yml .
 

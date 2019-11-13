@@ -46,6 +46,9 @@ export OVERRIDE_DIFF_CHECK="true"
 # TODO temporary hack until the batch mode in jx is fixed...
 export JX_BATCH_MODE="true"
 
+mkdir boot-source
+cd boot-source
+
 JX_DOWNLOAD_LOCATION=$(<jx/CJXD_LOCATION_LINUX)
 
 wget $JX_DOWNLOAD_LOCATION
@@ -67,10 +70,6 @@ helm repo add jenkins-x https://storage.googleapis.com/chartmuseum.jenkins-x.io
 mkdir /workspace/source/reports
 export REPORTS_DIR=/workspace/source/reports
 
-mkdir boot-source
-cd boot-source
-
-cp ../jx-requirements-gke.yml .
 
 jx step bdd \
     --use-revision \
