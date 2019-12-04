@@ -2,7 +2,7 @@
 set -e
 set -x
 
-export GH_USERNAME="jenkins-x-bot-test"
+export GH_USERNAME="cjxd-bot-test"
 export GH_OWNER="cb-kubecd"
 export GH_EMAIL="jenkins-x@googlegroups.com"
 
@@ -12,15 +12,19 @@ export BUILD_NUMBER="$BUILD_ID"
 JX_HOME="/tmp/jxhome"
 KUBECONFIG="/tmp/jxhome/config"
 
-mkdir -p $JX_HOME
+# lets avoid the git/credentials causing confusion during the test
+export XDG_CONFIG_HOME=$JX_HOME
+
+mkdir -p $JX_HOME/git
 
 jx --version
-jx step git credentials
+# replace the credentials file with a single user entry
+echo "https://$GH_USERNAME:$GH_ACCESS_TOKEN@github.com" > $JX_HOME/git/credentials
 
 gcloud auth activate-service-account --key-file $GKE_SA
 
 # lets setup git 
-git config --global --add user.name JenkinsXBot
+git config --global --add user.name CJXDBot
 git config --global --add user.email $GH_EMAIL
 
 echo "running the BDD tests with JX_HOME = $JX_HOME"

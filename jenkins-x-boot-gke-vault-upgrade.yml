@@ -4,12 +4,18 @@ pipelineConfig:
     pullRequest:
       pipeline:
         environment:
+          - name: JX_REQUIREMENT_VAULT_DISABLE_URL_DISCOVERY
+            value: "true"
+          - name: DOMAIN_ROTATION
+            value: "true"
+          - name: DOMAIN_PREFIX
+            value: "cjxd"
+          - name: DOMAIN_SUFFIX
+            value: ".bdd.jenkins-x.rocks"
           - name: GKE_SA
             value: /secrets/bdd/sa.json
           - name: GOOGLE_APPLICATION_CREDENTIALS
             value: /secrets/bdd/sa.json
-          - name: JX_REQUIREMENT_VAULT_DISABLE_URL_DISCOVERY
-            value: "true"
           - name: GH_ACCESS_TOKEN 
             valueFrom:
               secretKeyRef:
@@ -37,7 +43,7 @@ pipelineConfig:
                   - mountPath: /secrets
                     name: sa
             steps:
-              - command: jx/bdd/boot-gke/ci.sh
+              - command: jx/bdd/boot-gke-vault-upgrade/ci.sh
                 name: runci
 
               - name: generate-report
@@ -53,13 +59,13 @@ pipelineConfig:
                   - --out-dir
                   - /workspace/source/reports
                   - --output-name
-                  - bdd_boot_gke_report.html
+                  - bdd_boot_gke_vault_upgrade_report.html
                   - --suite-name
-                  - "GKE_Boot_BDD_Tests"
+                  - "GKE_Boot_Vault_Upgrade_BDD_Tests"
             
               - name: stash_report
-                command: jx/bdd/boot-gke/report.sh
+                command: jx/bdd/boot-gke-vault-upgrade/report.sh
                 args:
                   - "/workspace/source/reports"
-                  - "/workspace/source/reports/bdd_boot_gke_report.html"
+                  - "/workspace/source/reports/bdd_boot_gke_vault_upgrade_report.html"
 
