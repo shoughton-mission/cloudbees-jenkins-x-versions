@@ -49,47 +49,40 @@ export JX_BATCH_MODE="true"
 mkdir boot-source
 cd boot-source
 
+PREVIOUS_JX_DOWNLOAD_LOCATION=$(git show master:../jx/CJXD_LOCATION_LINUX)
 JX_DOWNLOAD_LOCATION=$(<../jx/CJXD_LOCATION_LINUX)
 
+wget $PREVIOUS_JX_DOWNLOAD_LOCATION
+tar -zxvf jx-linux-amd64.tar.gz
+export JX_BIN_DIR=$(pwd)
+export PATH=$JX_BIN_DIR:$PATH
+
+
+mkdir next_js_bin
+cd next_js_bin
 wget $JX_DOWNLOAD_LOCATION
 tar -zxvf jx-linux-amd64.tar.gz
-export PATH=$(pwd):$PATH
+export JX_UPGRADE_BIN_DIR=$(pwd)
+cd ..
 
+echo "Starting with binary from $PREVIOUS_JX_DOWNLOAD_LOCATION"
+echo "Upgrading using binary from $JX_DOWNLOAD_LOCATION"
 
-# use the current git SHA being built in the version stream
-if [[ -n "${PULL_PULL_SHA}" ]]; then
-  sed -i "/^ *versionStream:/,/^ *[^:]*:/s/ref: .*/ref: ${PULL_PULL_SHA}/" ../jx/bdd/boot-gke-vault/jx-requirements.yml
-fi
+sed -i "/^ *versionStream:/,/^ *[^:]*:/s/ref: .*/ref: master/" ../jx/bdd/boot-gke-vault-upgrade/jx-requirements.yml
 
-
-# Rotate the domain to avoid cert-manager API rate limit
-if [[ "${DOMAIN_ROTATION}" == "true" ]]; then
-    SHARD=$(date +"%l" | xargs)
-    DOMAIN="${DOMAIN_PREFIX}${SHARD}${DOMAIN_SUFFIX}"
-    if [[ -z "${DOMAIN}" ]]; then
-        echo "Domain rotation enabled. Please set DOMAIN_PREFIX and DOMAIN_SUFFIX environment variables" 
-        exit -1
-    fi
-    echo "Using domain: ${DOMAIN}"
-    sed -i "/^ *ingress:/,/^ *[^:]*:/s/domain: .*/domain: ${DOMAIN}/" ../jx/bdd/boot-gke-vault/jx-requirements.yml
-fi
-
-echo "Using ../jx/bdd/boot-gke-vault/jx-requirements.yml"
-cat ../jx/bdd/boot-gke-vault/jx-requirements.yml
+echo "Using ../jx/bdd/boot-gke-vault-upgrade/jx-requirements.yml"
+cat ../jx/bdd/boot-gke-vault-upgrade/jx-requirements.yml
 
 
 
-cp ../jx/bdd/boot-gke-vault/jx-requirements.yml .
+cp ../jx/bdd/boot-gke-vault-upgrade/jx-requirements.yml .
 
 # TODO hack until we fix boot to do this too!
 helm init --client-only
 helm repo add jenkins-x https://storage.googleapis.com/chartmuseum.jenkins-x.io
 
 jx step bdd \
-    --use-revision \
-    --version-repo-pr \
-    --versions-repo https://github.com/cloudbees/cloudbees-jenkins-x-versions.git \
-    --config ../jx/bdd/boot-gke-vault/cluster.yaml \
+    --config ../jx/bdd/boot-gke-vault-upgrade/cluster.yaml \
     --gopath /tmp \
     --git-provider=github \
     --git-username $GH_USERNAME \
@@ -100,6 +93,6 @@ jx step bdd \
     --no-delete-repo \
     --tests install \
     --tests test-verify-pods \
-    --tests test-create-spring \
-    --tests test-supported-quickstarts 
-    # --tests test-import # fails with vault
+    --tests test-upgrade-boot \
+    --tests test-verify-pods \
+    --tests test-create-spring
