@@ -2,6 +2,8 @@
 set -e
 set -x
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 export GH_USERNAME="cjxd-bot-test"
 export GH_OWNER="cb-kubecd"
 export GH_EMAIL="jenkins-x@googlegroups.com"
@@ -81,6 +83,7 @@ export REPORTS_DIR=/workspace/source/reports
 
 echo "Running bdd tests with JX_APP_UI_VERSION=${JX_APP_UI_VERSION}"
 
+TEST_EXIT_CODE=0
 jx step bdd \
     --use-revision \
     --version-repo-pr \
@@ -94,4 +97,10 @@ jx step bdd \
     --default-admin-password $JENKINS_PASSWORD \
     --no-delete-app \
     --no-delete-repo \
-    --tests test-jxui
+    --tests test-jxui \
+    || TEST_EXIT_CODE=$?
+
+echo "Generating test report"
+${DIR}/report.sh ${REPORT_OUT_DIR} ${REPORT_OUTPUT_NAME}
+
+exit ${TEST_EXIT_CODE}
