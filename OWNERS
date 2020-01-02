@@ -10,6 +10,8 @@ approvers:
 - abayer
 - macox
 - dgozalo
+- romainverduci
+- hferentschik
 reviewers:
 - rawlingsj
 - jstrachan
@@ -22,3 +24,5 @@ reviewers:
 - abayer
 - macox
 - dgozalo
+- romainverduci
+- hferentschik
