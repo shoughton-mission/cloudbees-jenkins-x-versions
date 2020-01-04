@@ -15,6 +15,9 @@ then
     pushd $(mktemp -d)
       git clone https://github.com/jenkins-x/jx-docs.git
       pushd jx-docs/content/en/docs/reference/commands
+        # Cleanup the commands directory before generating new docs to avoid keeping the 
+        # deprecated commands of which doc is not anymore generated.
+        rm -rf *
         jx create docs
         git config credential.helper store
         git add *
@@ -41,10 +44,10 @@ then
 
       mkdir -p ${GOPATH}/src/github.com/jenkins-x
       pushd ${GOPATH}/src/github.com/jenkins-x
-      git clone https://github.com/jenkins-x/jx.git
-      pushd jx
-        git fetch --tags
-        git checkout v${JX_VERSION}
+        git clone https://github.com/jenkins-x/jx.git
+        pushd jx
+          git fetch --tags
+          git checkout v${JX_VERSION}
           # make generate-refdocs needs go modules enabled. The long term solution is probably to turn it on in jx's makefile, but for the moment...
           GO111MODULE=on make generate-refdocs
         popd
