@@ -70,6 +70,19 @@ echo "Upgrading using binary from $JX_DOWNLOAD_LOCATION"
 
 sed -i "/^ *versionStream:/,/^ *[^:]*:/s/ref: .*/ref: master/" ../jx/bdd/boot-gke-vault-upgrade/jx-requirements.yml
 
+# Rotate the domain to avoid cert-manager API rate limit
+if [[ "${DOMAIN_ROTATION}" == "true" ]]; then
+    SHARD=$(date +"%l" | xargs)
+    DOMAIN="${DOMAIN_PREFIX}${SHARD}${DOMAIN_SUFFIX}"
+    if [[ -z "${DOMAIN}" ]]; then
+        echo "Domain rotation enabled. Please set DOMAIN_PREFIX and DOMAIN_SUFFIX environment variables"
+        exit -1
+    fi
+    echo "Using domain: ${DOMAIN}"
+    sed -i "/^ *ingress:/,/^ *[^:]*:/s/domain: .*/domain: ${DOMAIN}/" ../jx/bdd/boot-gke-vault-upgrade/jx-requirements.yml
+fi
+
+
 echo "Using ../jx/bdd/boot-gke-vault-upgrade/jx-requirements.yml"
 cat ../jx/bdd/boot-gke-vault-upgrade/jx-requirements.yml
 
