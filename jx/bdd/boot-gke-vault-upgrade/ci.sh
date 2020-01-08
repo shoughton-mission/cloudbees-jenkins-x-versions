@@ -95,7 +95,7 @@ helm init --client-only
 helm repo add jenkins-x https://storage.googleapis.com/chartmuseum.jenkins-x.io
 
 GKE_SA_NAME=$(gcloud config get-value account --verbosity error)
-sed -i "s/--service-account=/--service-account=$GKE_SA_NAME" ../jx/bdd/boot-gke-vault-upgrade/cluster.yaml
+sed -i "s/--service-account=/--service-account=$GKE_SA_NAME/" ../jx/bdd/boot-gke-vault-upgrade/cluster.yaml
 
 jx step bdd \
     --config ../jx/bdd/boot-gke-vault-upgrade/cluster.yaml \
