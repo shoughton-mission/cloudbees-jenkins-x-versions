@@ -99,7 +99,7 @@ sed -i "s/--service-account=/--service-account=$GKE_SA_NAME/" ../jx/bdd/boot-gke
 
 jx step bdd \
     --config ../jx/bdd/boot-gke-vault-upgrade/cluster.yaml \
-    --binary $JX_UPGRADE_BIN_DIR/jx
+    --binary $JX_UPGRADE_BIN_DIR/jx \
     --gopath /tmp \
     --git-provider=github \
     --git-username $GH_USERNAME \
