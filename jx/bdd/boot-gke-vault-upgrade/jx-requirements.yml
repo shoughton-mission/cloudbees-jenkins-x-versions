@@ -24,7 +24,7 @@ environments:
       tls:
         enabled: false
 ingress:
-  domain: cjxd1.bdd.jenkins-x.rocks
+  domain: cjxdu1.bdd.jenkins-x.rocks
   externalDNS: true
   namespaceSubDomain: -jx.
   tls:
