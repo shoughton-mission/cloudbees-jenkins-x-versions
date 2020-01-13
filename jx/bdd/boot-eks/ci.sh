@@ -83,6 +83,10 @@ curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.14
   chmod +x ./aws-iam-authenticator && \
   mv aws-iam-authenticator /usr/local/bin/
 
+#just for BDD tests until we have CJXD V6
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/0.11.0/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp && \
+  mv /tmp/eksctl /usr/local/bin -f
+
 jx step bdd \
     --use-revision \
     --version-repo-pr \
