@@ -17,10 +17,12 @@ pipelineConfig:
             value: http://jenkins-x-athens-proxy:80
           - name: GKE_SA
             value: /secrets/bdd/sa.json
-          - name: BB_ACCESS_TOKEN 
+          - name: JX_REQUIREMENT_VAULT_DISABLE_URL_DISCOVERY
+            value: "true"
+          - name: GH_ACCESS_TOKEN 
             valueFrom:
               secretKeyRef:
-                name: jx-pipeline-git-bitbucketserver-bs
+                name: jenkins-x-versions-bot-test-github
                 key: password
           - name: JENKINS_PASSWORD
             valueFrom:
@@ -44,5 +46,5 @@ pipelineConfig:
                   - mountPath: /secrets
                     name: sa
             steps:
-              - command: jx/bdd/boot-lh-bs/ci.sh
+              - command: jx/bdd/boot-vault-upgrade/ci.sh
                 name: runci
