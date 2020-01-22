@@ -1,9 +1,10 @@
 cluster:
-  clusterName: bdd-boot-v
+  clusterName: bdd-boot-v-u
   environmentGitOwner: jenkins-x-versions-bot-test
   project: jenkins-x-bdd3
   provider: gke
   zone: europe-west1-c
+gitops: true
 environments:
   - key: dev
     owner: ""
@@ -33,5 +34,8 @@ storage:
     url: "gs://jx-bdd-log-store3"
 vault:
   disableURLDiscovery: true
+versionStream:
+  ref: master
+  url: https://github.com/jenkins-x/jenkins-x-versions.git
 webhook: prow
 

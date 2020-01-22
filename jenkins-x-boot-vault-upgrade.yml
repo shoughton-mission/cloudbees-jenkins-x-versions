@@ -17,26 +17,18 @@ pipelineConfig:
             value: http://jenkins-x-athens-proxy:80
           - name: GKE_SA
             value: /secrets/bdd/sa.json
-          - name: GHE_ACCESS_TOKEN 
+          - name: JX_REQUIREMENT_VAULT_DISABLE_URL_DISCOVERY
+            value: "true"
+          - name: GH_ACCESS_TOKEN 
             valueFrom:
               secretKeyRef:
-                name: jx-pipeline-git-github-ghe
+                name: jenkins-x-versions-bot-test-github
                 key: password
           - name: JENKINS_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: test-jenkins-user 
                 key: password
-          - name: AWS_ACCESS_KEY_ID
-            valueFrom:
-              secretKeyRef:
-                name: jx-bdd-aws 
-                key: AWS_ACCESS_KEY_ID
-          - name: AWS_SECRET_ACCESS_KEY
-            valueFrom:
-              secretKeyRef:
-                name: jx-bdd-aws 
-                key: AWS_SECRET_ACCESS_KEY
         agent:
           image: gcr.io/jenkinsxio/builder-go-nodejs:2.0.1140-472
         stages:
@@ -54,5 +46,5 @@ pipelineConfig:
                   - mountPath: /secrets
                     name: sa
             steps:
-              - command: jx/bdd/eksclassic/ci.sh
+              - command: jx/bdd/boot-vault-upgrade/ci.sh
                 name: runci
