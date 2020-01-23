@@ -2,9 +2,9 @@
 set -euo pipefail
 set -x
 
-export GH_USERNAME="jenkins-x-bot-test"
+export GH_USERNAME="jenkins-x-versions-bot-test"
 export GH_EMAIL="jenkins-x@googlegroups.com"
-export GH_OWNER="jenkins-x-bot-test"
+export GH_OWNER="jenkins-x-versions-bot-test"
 
 # fix broken `BUILD_NUMBER` env var
 export BUILD_NUMBER="$BUILD_ID"
@@ -12,10 +12,15 @@ export BUILD_NUMBER="$BUILD_ID"
 JX_HOME="/tmp/jxhome"
 KUBECONFIG="/tmp/jxhome/config"
 
-mkdir -p $JX_HOME
+# lets avoid the git/credentials causing confusion during the test
+export XDG_CONFIG_HOME=$JX_HOME
+
+mkdir -p $JX_HOME/git
 
 jx --version
-jx step git credentials
+
+# replace the credentials file with a single user entry
+echo "https://$GH_USERNAME:$GH_ACCESS_TOKEN@github.com" > $JX_HOME/git/credentials
 
 # setup GCP service account
 gcloud auth activate-service-account --key-file $GKE_SA
@@ -36,26 +41,29 @@ export JX_VALUE_PROW_HMACTOKEN="$GH_ACCESS_TOKEN"
 # TODO temporary hack until the batch mode in jx is fixed...
 export JX_BATCH_MODE="true"
 
+export BOOT_CONFIG_VERSION=$(jx step get dependency-version --host=github.com --owner=jenkins-x --repo=jenkins-x-boot-config --dir . | sed 's/.*: \(.*\)/\1/')
+
 # prepare the BDD configuration
 git clone https://github.com/jenkins-x/jenkins-x-boot-config.git boot-source
-cp jx/bdd/boot-vault-tls/jx-requirements.yml boot-source
-cp jx/bdd/boot-vault-tls/parameters.yaml boot-source/env
 cd boot-source
+git checkout tags/v${BOOT_CONFIG_VERSION} -b latest-boot-config
+cp ../jx/bdd/boot-vault-tls/jx-requirements.yml . 
+cp ../jx/bdd/boot-vault-tls/parameters.yaml env
 
 # Rotate the domains to avoid cert-manager API rate limit. 
 # This rotation is using # 2 domains per hour, using a "seed" of today's day-of-year to ensure a different start of
 # the rotation daily.
 if [[ "${DOMAIN_ROTATION}" == "true" ]]; then
-    SHARD=$(date +"%l" | xargs)
+    SHARD=$(date +"%-l" | xargs)
     if [[ $SHARD -eq 12 ]]; then
         SHARD=0
     fi
     SHARD=$((2 * SHARD + 1))
-    MIN=$(date +"%M" | xargs)
+    MIN=$(date +"%-M" | xargs)
     if [[ $MIN -gt 30 ]]; then
         SHARD=$((SHARD + 1))
     fi
-    DOY=$(date +"%j" | xargs)
+    DOY=$(date +"%-j" | xargs)
     SHARD=$(((SHARD + DOY) % 24))
     # If we end up at 0, then roll back over to 24.
     if [[ $SHARD -eq 0 ]]; then
