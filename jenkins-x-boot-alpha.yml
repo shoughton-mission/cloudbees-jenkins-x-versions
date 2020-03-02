@@ -27,18 +27,8 @@ pipelineConfig:
               secretKeyRef:
                 name: test-jenkins-user 
                 key: password
-          - name: AWS_ACCESS_KEY_ID
-            valueFrom:
-              secretKeyRef:
-                name: jx-bdd-aws 
-                key: AWS_ACCESS_KEY_ID
-          - name: AWS_SECRET_ACCESS_KEY
-            valueFrom:
-              secretKeyRef:
-                name: jx-bdd-aws 
-                key: AWS_SECRET_ACCESS_KEY
         agent:
-          image: gcr.io/jenkinsxio/builder-go-nodejs:2.0.1221-560
+          image: gcr.io/jenkinsxio/builder-go-nodejs:2.0.1202-541
         stages:
           - name: ci
             options:
@@ -54,5 +44,6 @@ pipelineConfig:
                   - mountPath: /secrets
                     name: sa
             steps:
-              - command: jx/bdd/ekstekton/ci.sh
+              - command: jx/bdd/boot-alpha/ci.sh
+                image: gcr.io/jenkinsxio-labs/jxl:0.0.38
                 name: runci
