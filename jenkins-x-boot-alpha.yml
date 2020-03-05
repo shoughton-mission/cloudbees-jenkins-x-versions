@@ -17,10 +17,10 @@ pipelineConfig:
             value: http://jenkins-x-athens-proxy:80
           - name: GKE_SA
             value: /secrets/bdd/sa.json
-          - name: GL_ACCESS_TOKEN 
+          - name: GH_ACCESS_TOKEN 
             valueFrom:
               secretKeyRef:
-                name: jx-pipeline-git-gitlab-gl
+                name: jenkins-x-versions-bot-test-github
                 key: password
           - name: JENKINS_PASSWORD
             valueFrom:
@@ -44,5 +44,6 @@ pipelineConfig:
                   - mountPath: /secrets
                     name: sa
             steps:
-              - command: jx/bdd/boot-lh-gl/ci.sh
+              - command: jx/bdd/boot-alpha/ci.sh
+                image: gcr.io/jenkinsxio-labs/jxl:0.0.38
                 name: runci
