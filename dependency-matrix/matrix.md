@@ -64,3 +64,4 @@ Dependency | Sources | Version | Mismatched versions
 [jenkins-x/jenkins-x-builders-base-image](https://github.com/jenkins-x/jenkins-x-builders-base-image) | [github.com/jenkins-x/jenkins-x-builders-ml](https://github.com/jenkins-x/jenkins-x-builders-ml.git) | [0.0.34]() | 
 [solo-io/gloo](https://github.com/solo-io/gloo) |  | [1.3.12](https://github.com/solo-io/gloo/releases/tag/v1.3.12) | 
 [kubernetes-sigs/external-dns](https://github.com/kubernetes-sigs/external-dns) |  | [2.20.5]() | 
+[cloudbees/cloudbees-jenkins-x-boot-config](https://github.com/cloudbees/cloudbees-jenkins-x-boot-config) |  | [2.0.1005+cjxd.5](https://github.com/cloudbees/cloudbees-jenkins-x-boot-config/releases/tag/v2.0.1005%2Bcjxd.5) | 

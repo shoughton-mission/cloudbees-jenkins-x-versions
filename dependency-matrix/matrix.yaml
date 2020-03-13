@@ -455,3 +455,9 @@ dependencies:
   url: https://github.com/kubernetes-sigs/external-dns
   version: 2.20.5
   versionURL: ""
+- host: github.com
+  owner: cloudbees
+  repo: cloudbees-jenkins-x-boot-config
+  url: https://github.com/cloudbees/cloudbees-jenkins-x-boot-config
+  version: 2.0.1005+cjxd.5
+  versionURL: https://github.com/cloudbees/cloudbees-jenkins-x-boot-config/releases/tag/v2.0.1005%2Bcjxd.5
