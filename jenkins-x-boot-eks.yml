@@ -25,7 +25,7 @@ pipelineConfig:
                 name: test-jenkins-user
                 key: password
           - name: AWS_REGION
-            value: "us-east-1"
+            value: "us-west-2"
           - name: VAULT_AWS_ACCESS_KEY_ID
             valueFrom:
               secretKeyRef:
